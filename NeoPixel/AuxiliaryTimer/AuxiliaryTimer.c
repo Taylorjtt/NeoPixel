@@ -7,7 +7,8 @@
 
 
 #include "AuxiliaryTimer.h"
-
+float value = 0.0;
+bool countUp = true;
 AuxiliaryTimerHandle AuxiliaryTimer_Constructor(void *pmemory, const size_t numbytes)
 {
 	AuxiliaryTimerHandle handle;
@@ -45,11 +46,24 @@ void AuxiliaryTimer_service(AuxiliaryTimerHandle handle, HAL_Handle halHandle,Ne
 		if(obj->fourHzDecimatorCount > obj->fourHzDecimationFactor)
 		{
 			//serviced at 2Hz
-
+			if(countUp)
+			{
+				value = value + 10;
+			}
+			else
+			{
+				value = value - 10;
+			}
 			obj->fourHzDecimatorCount = 0;
-			NeoPixelString_rotate(neoPixelString);
-			NeoPixelString_draw(neoPixelString);
-
+			NeoPixelString_diplayValue(neoPixelString,value);
+			if(value > 100)
+			{
+				countUp = false;
+			}
+			if(value < 0)
+			{
+				countUp = true;
+			}
 
 		}
 		if(obj->oneHzDecimatorCount > obj->oneHzDecimationFactor)

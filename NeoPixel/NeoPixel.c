@@ -30,9 +30,9 @@ int main(void)
 	halHandle = HAL_init(&hal,sizeof(hal));
 	HAL_setupProcessor(halHandle);
 	DELAY_US(1e6);
+
 	auxiliaryTimer = far_malloc(sizeof(AuxiliaryTimerObject));
 	neoPixelString = far_malloc(sizeof(NeoPixelString));
-
 	/*
 	 *End dynamic memory allocation
 	 */
