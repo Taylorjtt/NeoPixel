@@ -16,6 +16,24 @@ typedef struct
 	float blue;
 }RGBColor;
 
+inline RGBColor RGBColor_getGradientForValue(float value)
+{
+	float red;
+	float green;
+	if(value < 50)
+	{
+		 red = 2*value/100;
+		 green = 1;
+	}
+	else
+	{
+		red = 1.0;
+		green = 1- 2*(value-50)/100;
+	}
+
+	RGBColor color = {red,green,0};
+	return color;
+}
 static RGBColor RED = {1,0,0};
 static RGBColor LIME = {0,1,0};
 static RGBColor BLUE = {0,0,1};

@@ -28,25 +28,21 @@ NeoPixelStringHandle NeoPixelString_Constructor(void *pmemory, const size_t numb
 
 	return handle;
 }
+
 void NeoPixelString_diplayValue(NeoPixelStringHandle handle, float value)
 {
 	NeoPixelString *obj = (NeoPixelString *)handle;
 	float red;
 	float green;
-	if(value < 50)
-	{
-		 red = 2*value/100;
-		 green = 1;
-	}
-	else
-	{
-		red = 1.0;
-		green = 1- 2*(value-50)/100;
-	}
+
 	float numberOfLEDsToLightUp = value*obj->numberOfLEDS/100;
 	//RGBColor LEDColor = {value/100,(100-value)/100,0};
 	RGBColor LEDColor = {red,green,0};
-	NeoPixelString_initializeStringToOneColor(handle,LEDColor);
+	int i = 0;
+	for(i = 0; i < numberOfLEDsToLightUp; i++)
+	{
+		NeoPixelString_setColor(handle,i,RGBColor_getGradientForValue(i*8));
+	}
 	NeoPixelString_drawNumber(handle,numberOfLEDsToLightUp);
 }
 void NeoPixelString_setColor(NeoPixelStringHandle handle, int ledNumber, RGBColor color)
